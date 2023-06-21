@@ -1,0 +1,156 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Monthly Due Student List</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item">Monthly Due Student List</li>
+             <li class="breadcrumb-item active">Data</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+         <div class="col-lg-12">
+            <div class="card">
+               <div class="card-body" style="padding-top: 20px;">
+                  <div class="col-md-8">               
+                     <form [formGroup] = "form" (ngSubmit)="getDueStudentList()">
+                        <div class="text-center">
+                           <div class="row mb-12">
+                              <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                              <div class="col-sm-4"> <input type="date" class="form-control" formControlName="searchDate"></div>
+                              <div class="col-sm-4"> <button type="submit" class="btn btn-primary" (click)="sendSearchDate()">Search</button></div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+       </div>
+    </section>
+    <section class="section">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title">Students</h5>
+                   <table class="table" datatable [dtOptions]="dtOptions">
+                      <thead>
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Mobile Number</th>
+                            <!-- <th scope="col">Status</th> -->
+                            <th scope="col">Seat Number</th>
+                            <!-- <th scope="col">Due Date</th> -->
+                            <th scope="col">Actions</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let student of students; let i = index">
+                           <th scope="row">{{ student.student_id }}</th>
+                           <td>{{ student.student_fname }}</td>  
+                           <td>{{ student.student_mobilenumber }}</td>  
+                           <!-- <td>
+                               <span [ngClass]="student.student_status ? 'badge bg-success' : 'badge bg-danger'">
+                                   {{ student.student_status ? 'Active' : 'Deactive' }}
+                               </span>
+                           </td>  -->
+                           <td>{{ student.student_seatnumber }}</td>
+                           <!-- <td>{{ student.student_monthly_paid[i].due_month}}</td> -->
+                           <td>
+                               <ng-container *ngIf="student.student_unpaid_count > 0">
+                                   <span [ngClass]="student.student_unpaid_count == 0 ? 'badge bg-success' : 'badge bg-danger'">
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#paymentmodal" (click)="dueId(student.student_id)">
+                                           {{ student.student_unpaid_count == 0 ? 'Paid' : 'Unpaid' }}
+                                       <ng-container *ngIf="student.student_unpaid_count > 0">
+                                           ({{ student.student_unpaid_count }} times Unpaid)
+                                       </ng-container>
+                                       </a>
+                                   </span>
+                               </ng-container>
+                               <ng-container *ngIf="student.student_unpaid_count <= 0">
+                                   <span [ngClass]="student.student_unpaid_count == 0 ? 'badge bg-success' : 'badge bg-danger'">
+                                       {{ student.student_unpaid_count == 0 ? 'Paid' : 'Unpaid' }}
+                                   </span>
+                               </ng-container>
+                           </td> 
+                       </tr>                     
+                         <!-- <tr>
+                            <th scope="row">2</th>
+                            <td>Bridie Kessler</td>
+                            <td>Developer</td>
+                            <td>35</td>
+                            <td>2014-12-05</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">3</th>
+                            <td>Ashleigh Langosh</td>
+                            <td>Finance</td>
+                            <td>45</td>
+                            <td>2011-08-12</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">4</th>
+                            <td>Angus Grady</td>
+                            <td>HR</td>
+                            <td>34</td>
+                            <td>2012-06-11</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">5</th>
+                            <td>Raheem Lehner</td>
+                            <td>Dynamic Division Officer</td>
+                            <td>47</td>
+                            <td>2011-04-19</td>
+                         </tr> -->
+                      </tbody>
+                   </table>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+    <!-- Payment modal -->
+    <form [formGroup]="paymentForm" (submit)="onSubmit()">
+      <div class="modal fade" id="paymentmodal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Payment</h5>
+              <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="" class="form-label">Are you sure want to pay</label>
+              <div class="row mb-2">
+                <label class="col-sm-4 col-form-label">Select Month</label>
+                <div class="col-sm-8">
+                  <select class="form-select" aria-label="Default select example" formControlName="month" (change)="onChange($event)">
+                    <option value="">Select Month</option>
+                    <option value="1">1 Month</option>
+                    <option value="2">2 Month</option>
+                    <option value="3">3 Month</option>
+                  </select>
+                  <!-- <div *ngIf="paymentForm.get('month').errors?.required && paymentForm.get('month').touched" class="text-danger">Select a month</div> -->
+                </div>
+              </div>
+              <!-- <div class="row mb-2" id="amount-field" *ngIf="showAmountField"> -->
+               <div class="row mb-2" id="amount-field">
+                <label class="col-sm-4 col-form-label">Enter Amount</label>
+                <div class="col-sm-8">
+                  <input type="number" class="form-control" formControlName="amount" placeholder="Enter Amount">
+                  <!-- <div *ngIf="paymentForm.get('amount').errors?.required && paymentForm.get('amount').touched" class="text-danger">Enter an amount</div> -->
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Pay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+ </main>

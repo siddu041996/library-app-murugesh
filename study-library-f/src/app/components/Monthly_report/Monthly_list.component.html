@@ -1,0 +1,120 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Monthly Student List</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item">Monthly Student List</li>
+             <li class="breadcrumb-item active">Data</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+         <div class="col-lg-12">
+            <div class="card">
+               <div class="card-body" style="padding-top: 20px;">   
+                  <div class="col-md-8">                
+                     <form [formGroup] = "form">
+                        <div class="text-center">
+                           <div class="row mb-12">
+                              <label for="inputDate" class="col-sm-2 col-form-label">Select Month</label>
+                              <div class="col-sm-4">
+                                 <select class="form-select" aria-label="Default select example" id="presentMonth" formControlName="presentMonth">
+                                    <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+                                 </select>
+                              </div>
+                              <div class="col-sm-4"> <button type="submit" class="btn btn-primary" (click)="onSearchMonth()">Search</button></div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+       </div>
+    </section>
+    <section class="section">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title">Students</h5>
+                   <!-- <p>Add lightweight datatables to your project.</p> -->
+                   <table class="table" datatable [dtOptions]="dtOptions">
+                      <thead>
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Mobile Number</th>
+                            <!-- <th scope="col">Email</th> -->
+                            <!-- <th scope="col">Status</th> -->
+                            <th scope="col">Seat Number</th>
+                            <th scope="col">Due Date</th>
+                            <!-- <th scope="col">Actions</th> -->
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <tr *ngFor="let student of students">
+                            <th scope="row">{{student.student_id}}</th>
+                            <td>{{student.student_fname + " " +student.student_lname}}</td>  
+                            <td>{{ student.student_mobilenumber }}</td>
+                            <!-- <td>{{student.student_email}}</td>   -->
+                            <!-- <td><span class="badge bg-success">Active</span></td>  -->
+                            <td>{{student.student_seatnumber}}</td>
+                            <td>{{student.student_joining_date}}</td> 
+                            <!-- <td>
+                              <a routerLink="/Add-Student"><i class="bi bi-pencil-square me-2"></i></a>
+                              <a routerLink="/Add-Student"><i class="bi bi-eye me-2"></i></a>
+                              <a href="" data-bs-toggle="modal" data-bs-target="#verticalycentered"><i class="bi bi-trash me-2"></i></a>
+                           </td> -->
+                         </tr>
+                         <!-- <tr>
+                            <th scope="row">2</th>
+                            <td>Bridie Kessler</td>
+                            <td>Developer</td>
+                            <td>35</td>
+                            <td>2014-12-05</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">3</th>
+                            <td>Ashleigh Langosh</td>
+                            <td>Finance</td>
+                            <td>45</td>
+                            <td>2011-08-12</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">4</th>
+                            <td>Angus Grady</td>
+                            <td>HR</td>
+                            <td>34</td>
+                            <td>2012-06-11</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">5</th>
+                            <td>Raheem Lehner</td>
+                            <td>Dynamic Division Officer</td>
+                            <td>47</td>
+                            <td>2011-04-19</td>
+                         </tr> -->
+                      </tbody>
+                   </table>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+    <!-- Delete Student modal -->
+    <div class="modal fade" id="verticalycentered" tabindex="-1">
+       <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Delete Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body"> Are you sure to delete this Student</div>
+             <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> <button type="button" class="btn btn-danger">Delete</button></div>
+          </div>
+       </div>
+    </div>
+ </main>

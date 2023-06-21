@@ -1,0 +1,99 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Student List</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item">Student List</li>
+             <li class="breadcrumb-item active">Data</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="card">
+                <div class="card-body">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                     <h5 class="card-title">Students</h5>
+                     <div style="display: flex; align-items: center;">
+                       <h5 class="card-title" style="margin-right: 10px;">Filter:</h5>
+                       <!-- <button [ngClass]="{'btn btn-outline-danger': status == 'Active', 'btn btn-danger': 'Deactive'}" (click)="filterById()" type="submit">Deactive</button> -->
+                       <button [ngClass]="status == 'Active' ? 'btn btn-outline-danger' : 'btn btn-danger'" (click)="filterById()" type="submit">Deactive</button>
+                     </div>
+                   </div>                   
+                   <table class="table datatable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                      <thead>
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Seat Number</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Actions</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <tr *ngFor="let student of students">
+                            <th scope="row">{{student.student_id}}</th>
+                            <td>{{student.firstName}}</td>  
+                            <td>{{student.email}}</td>  
+                            <td><span [ngClass]="student.studentStatus ? 'badge bg-success' : 'badge bg-danger'">{{(student.studentStatus) ? "Active" : "Deactive"}}</span></td> 
+                            <td>{{student.student_seatnumber}}</td>
+                            <td>{{student.joiningDate}}</td> 
+                            <td>
+                              <a [routerLink]="['/Add-Student', student.student_id, 'editStudent']"><i class="bi bi-pencil-square me-2"></i></a>
+                              <a [routerLink]="['/Add-Student', student.student_id, 'viewStudent']"><i class="bi bi-eye me-2"></i></a>
+                              <a href="" data-bs-toggle="modal" data-bs-target="#verticalycentered"><i class="bi bi-trash me-2"></i></a>
+                            </td>
+                         </tr>
+                         <!-- <tr>
+                            <th scope="row">2</th>
+                            <td>Bridie Kessler</td>
+                            <td>Developer</td>
+                            <td>35</td>
+                            <td>2014-12-05</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">3</th>
+                            <td>Ashleigh Langosh</td>
+                            <td>Finance</td>
+                            <td>45</td>
+                            <td>2011-08-12</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">4</th>
+                            <td>Angus Grady</td>
+                            <td>HR</td>
+                            <td>34</td>
+                            <td>2012-06-11</td>
+                         </tr>
+                         <tr>
+                            <th scope="row">5</th>
+                            <td>Raheem Lehner</td>
+                            <td>Dynamic Division Officer</td>
+                            <td>47</td>
+                            <td>2011-04-19</td>
+                         </tr> -->
+                      </tbody>
+                   </table>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+    <!-- Delete Student modal -->
+    <div class="modal fade" id="verticalycentered" tabindex="-1">
+       <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Delete Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body"> Are you sure to delete this Student</div>
+             <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> <button type="button" class="btn btn-danger">Delete</button></div>
+          </div>
+       </div>
+    </div>
+ </main>

@@ -1,0 +1,6 @@
+.card-body .btn{margin-right: 5px;}
+.error {
+    display: inline-block;
+    margin-right: 10px;
+    color: red;
+  }
