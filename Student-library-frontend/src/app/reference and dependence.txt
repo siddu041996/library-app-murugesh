@@ -1,4 +1,0 @@
-----------------Reference sites---------------
------------login and register-------------------
-https://www.positronx.io/create-login-ui-template-with-angular-8-material-design/
---------------------------------------------
